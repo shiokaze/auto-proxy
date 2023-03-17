@@ -17,6 +17,7 @@ app.add_middleware(
 
 @app.post("/chat")
 def chat(message):
+    print("msg received")
     rsp = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=message
