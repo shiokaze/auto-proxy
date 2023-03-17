@@ -4,6 +4,7 @@ import openai
 from fastapi import FastAPI
 
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 app.add_middleware(
@@ -15,18 +16,19 @@ app.add_middleware(
 )
 
 
+class GBTForwardReq(BaseModel):
+    message: list
+
+
 @app.post("/chat")
-def chat(message):
+def chat(req: GBTForwardReq):
     print("msg received")
     rsp = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=message
+        messages=req.message
     )
     try:
         print("proxy rsp" + json.dumps(rsp))
     except Exception:
         print(Exception)
     return rsp
-
-
-
