@@ -25,7 +25,7 @@ class GBTForwardReq(BaseModel):
 
 @app.post("/chat")
 def chat(req: GBTForwardReq):
-    log.info("proxy req" + json.dumps(req, ensure_ascii=False))
+    log.info("proxy req" + json.dumps(req.message, ensure_ascii=False))
     rsp = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=req.message
